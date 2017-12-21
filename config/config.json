@@ -14,10 +14,10 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "123456",
-    "database": "anas-clothes-store-dev-prod",
-    "host": "127.0.0.1",
+    "username": "sfkahrozpaqtsh",
+    "password": "cc7f73938fa634a6b377372975a75545ea41175b0a5ed94b46fdf7c0161530c1",
+    "database": "d6emfu2bdavs3d",
+    "host": "ec2-54-235-244-185.compute-1.amazonaws.com",
     "dialect": "postgres"
   }
 }
