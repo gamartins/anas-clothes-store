@@ -5,12 +5,11 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     purchase_price: DataTypes.DECIMAL,
     purchase_date: DataTypes.DATE
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
-  });
+  })
+
+  Clothes.associate = (models) => {
+    Clothes.belongsTo(models.Users, { foreignKey: 'user_id' })
+  }
+
   return Clothes;
 };

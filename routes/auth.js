@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
         else
             res.status(401).json({ error: "Usuário não encontrado." })
     })
-    .catch(error => res.status(401).json({ error: error }))
+    .catch(error => res.status(401).json({ error: error.message }))
 })
 
 module.exports = router

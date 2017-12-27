@@ -14,6 +14,9 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
+      user_id: {
+        type: Sequelize.INTEGER,
+      },
       purchase_price: {
         type: Sequelize.DECIMAL
       },
@@ -28,6 +31,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    }, {
+      underscored: true
     });
   },
   down: (queryInterface, Sequelize) => {
