@@ -1,6 +1,9 @@
+const passport = require('../auth')
 var express = require('express')
 var router = express.Router()
 var Clothes = require('../models/index').Clothes
+
+router.all('*', passport.authenticate())
 
 router.get('/', function(req, res, next){
     Clothes.findAll()
