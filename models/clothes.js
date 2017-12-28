@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   var Clothes = sequelize.define('Clothes', {
     brand: DataTypes.STRING,
     description: DataTypes.STRING,
+    sold: DataTypes.BOOLEAN,
     purchase_price: DataTypes.DECIMAL,
     purchase_date: DataTypes.DATE
   })
