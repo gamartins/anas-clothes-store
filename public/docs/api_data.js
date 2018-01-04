@@ -1,0 +1,966 @@
+define({ "api": [
+  {
+    "type": " post ",
+    "url": "/auth",
+    "title": "Authenticate user",
+    "group": "Auth",
+    "name": "PostUser",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>user account e-mail</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>user account password</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"token\": \"SomeToken\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/auth.js",
+    "groupTitle": "Auth"
+  },
+  {
+    "type": "delete",
+    "url": "/clothes:id",
+    "title": "Remove a Clothe",
+    "group": "Clothes",
+    "name": "DeleteClothe",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 204 OK\n{ }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/clothes.js",
+    "groupTitle": "Clothes"
+  },
+  {
+    "type": "get",
+    "url": "/clothes",
+    "title": "Get list of all clothes",
+    "group": "Clothes",
+    "name": "GetClothes",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n[\n  {\n    \"id\": 1,\n    \"brand\": \"Nike\",\n    \"description\": \"Uma roupa esportiva\",\n    \"sold\": null,\n    \"purchase_price\": \"199.00\",\n    \"user_id\": 3\n  },\n  {\n    \"id\": 2,\n    \"brand\": \"Nike\",\n    \"description\": \"Uma roupa esportiva\",\n    \"sold\": null,\n    \"purchase_price\": \"199.00\",\n    \"user_id\": 3\n  },\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/clothes.js",
+    "groupTitle": "Clothes"
+  },
+  {
+    "type": "get",
+    "url": "/clothes/:id",
+    "title": "Get info of specific clothe",
+    "group": "Clothes",
+    "name": "GetClothesById",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Clothe id number</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK  \n{\n    \"id\": 2,\n    \"brand\": \"Nike\",\n    \"description\": \"Uma roupa esportiva\",\n    \"sold\": null,\n    \"purchase_price\": \"199.00\",\n    \"user_id\": 3\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/clothes.js",
+    "groupTitle": "Clothes"
+  },
+  {
+    "type": "post",
+    "url": "/clothes",
+    "title": "Create new clothe",
+    "group": "Clothes",
+    "name": "PostClothe",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "brand",
+            "description": "<p>Cloth brand, ie: Nike, Adidas...</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>Description about the clothe</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Decimal",
+            "optional": false,
+            "field": "purchase_price",
+            "description": "<p>Product price, ie: 199.00</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "purchase_date",
+            "description": "<p>Date when the product was purchased, ie: 01/01/2018</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n \"id\": 2,\n \"brand\": \"Nike\",\n \"description\": \"Uma roupa esportiva\",\n \"purchase_price\": \"199.00\",\n \"purchase_date\": \"2017-12-29T03:00:00.000Z\",\n \"user_id\": 3,\n \"sold\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/clothes.js",
+    "groupTitle": "Clothes"
+  },
+  {
+    "type": "post",
+    "url": "/clothes",
+    "title": "Create new clothe",
+    "group": "Clothes",
+    "name": "UpdateClothe",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The id of the product to be updated</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "brand",
+            "description": "<p>Cloth brand, ie: Nike, Adidas...</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>Description about the clothe</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Decimal",
+            "optional": false,
+            "field": "purchase_price",
+            "description": "<p>Product price, ie: 199.00</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "purchase_date",
+            "description": "<p>Date when the product was purchased, ie: 01/01/2018</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n \"id\": 2,\n \"brand\": \"Nike\",\n \"description\": \"Uma roupa esportiva\",\n \"purchase_price\": \"199.00\",\n \"purchase_date\": \"2017-12-29T03:00:00.000Z\",\n \"user_id\": 3,\n \"sold\": null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/clothes.js",
+    "groupTitle": "Clothes"
+  },
+  {
+    "type": "delete",
+    "url": "/customers/:id",
+    "title": "Remove a customer",
+    "group": "Customers",
+    "name": "DeleteCustomer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 204 OK\n{ }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/customers.js",
+    "groupTitle": "Customers"
+  },
+  {
+    "type": "get",
+    "url": "/customers",
+    "title": "Get list of all customers",
+    "group": "Customers",
+    "name": "GetCustomers",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n[\n    {\n        \"id\": 1,\n        \"name\": \"Rafinha\",\n        \"phone\": \"8535551234\",\n        \"address\": \"Montese?\",\n        \"user_id\": 3,\n        \"updatedAt\": \"2018-01-03T23:41:00.786Z\",\n        \"createdAt\": \"2018-01-03T23:41:00.786Z\"\n    },\n    {\n        \"id\": 1,\n        \"name\": \"Rafinha\",\n        \"phone\": \"8535551234\",\n        \"address\": \"Montese?\",\n        \"user_id\": 3,\n        \"updatedAt\": \"2018-01-03T23:41:00.786Z\",\n        \"createdAt\": \"2018-01-03T23:41:00.786Z\"\n    }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/customers.js",
+    "groupTitle": "Customers"
+  },
+  {
+    "type": "get",
+    "url": "/customers/:id",
+    "title": "Get info from a specific customer",
+    "group": "Customers",
+    "name": "GetCustomersById",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Customer id number</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"name\": \"Rafinha\",\n    \"phone\": \"8535551234\",\n    \"address\": \"Montese?\",\n    \"user_id\": 3\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/customers.js",
+    "groupTitle": "Customers"
+  },
+  {
+    "type": "post",
+    "url": "/customers",
+    "title": "Create new customer",
+    "group": "Customers",
+    "name": "PostCustomer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Customer's name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>Phone number</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Decimal",
+            "optional": false,
+            "field": "address",
+            "description": "<p>Customer's address</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"name\": \"Rafinha\",\n    \"phone\": \"8535551234\",\n    \"address\": \"Montese?\",\n    \"user_id\": 3\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/customers.js",
+    "groupTitle": "Customers"
+  },
+  {
+    "type": "put",
+    "url": "/customers",
+    "title": "Update data from a customer",
+    "group": "Customers",
+    "name": "PutCustomer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Customer's id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Customer's name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>Phone number</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Decimal",
+            "optional": false,
+            "field": "address",
+            "description": "<p>Customer's address</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"name\": \"Rafinha\",\n    \"phone\": \"8535551234\",\n    \"address\": \"Montese?\",\n    \"user_id\": 3\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/customers.js",
+    "groupTitle": "Customers"
+  },
+  {
+    "type": "delete",
+    "url": "/sales/:id",
+    "title": "Remove sale",
+    "group": "Sales",
+    "name": "DeleteSales",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Sale's id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 204 OK\n{ }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/sales.js",
+    "groupTitle": "Sales"
+  },
+  {
+    "type": "get",
+    "url": "/sales",
+    "title": "Get list of all sales",
+    "group": "Sales",
+    "name": "GetSales",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n[\n    {\n        \"id\": 1,\n        \"date\": \"2018-01-03T03:00:00.000Z\",\n        \"paid\": true,\n        \"value\": \"39.90\",\n        \"user_id\": 3,\n        \"clothe_id\": 1,\n        \"customer_id\": 1\n    },\n    {\n        \"id\": 1,\n        \"date\": \"2018-01-03T03:00:00.000Z\",\n        \"paid\": true,\n        \"value\": \"39.90\",\n        \"user_id\": 3,\n        \"clothe_id\": 1,\n        \"customer_id\": 1\n    }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/sales.js",
+    "groupTitle": "Sales"
+  },
+  {
+    "type": "get",
+    "url": "/sales/:id",
+    "title": "Get list from a specific sale",
+    "group": "Sales",
+    "name": "GetSales",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Sale's id number</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"date\": \"2018-01-03T03:00:00.000Z\",\n    \"paid\": true,\n    \"value\": \"39.90\",\n    \"user_id\": 3,\n    \"clothe_id\": 1,\n    \"customer_id\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/sales.js",
+    "groupTitle": "Sales"
+  },
+  {
+    "type": "post",
+    "url": "/sales",
+    "title": "Create a new sale",
+    "group": "Sales",
+    "name": "PostSales",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "date",
+            "description": "<p>Sale's date</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Boolean",
+            "optional": false,
+            "field": "paid",
+            "description": "<p>Sale's has been paid</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Decimal",
+            "optional": false,
+            "field": "value",
+            "description": "<p>Sale's value</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "clothe_id",
+            "description": "<p>id from the clothe sold</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "customer_id",
+            "description": "<p>id from the customer</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"date\": \"2018-01-03T03:00:00.000Z\",\n    \"paid\": true,\n    \"value\": \"39.90\",\n    \"user_id\": 3,\n    \"clothe_id\": 1,\n    \"customer_id\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/sales.js",
+    "groupTitle": "Sales"
+  },
+  {
+    "type": "put",
+    "url": "/sales",
+    "title": "Update a sale",
+    "group": "Sales",
+    "name": "PutSales",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "date",
+            "description": "<p>Sale's date</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Boolean",
+            "optional": false,
+            "field": "paid",
+            "description": "<p>Sale's has been paid</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Decimal",
+            "optional": false,
+            "field": "value",
+            "description": "<p>Sale's value</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "clothe_id",
+            "description": "<p>id from the clothe sold</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "customer_id",
+            "description": "<p>id from the customer</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": 1,\n    \"date\": \"2018-01-03T03:00:00.000Z\",\n    \"paid\": true,\n    \"value\": \"39.90\",\n    \"user_id\": 3,\n    \"clothe_id\": 1,\n    \"customer_id\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/sales.js",
+    "groupTitle": "Sales"
+  },
+  {
+    "type": "get",
+    "url": "/users",
+    "title": "Get list of all users",
+    "group": "Users",
+    "name": "CreateUser",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n[\n  {\n    \"id\": \"1\",\n    \"name\": \"John Doe\",\n    \"email\": \"john@email.com\"\n  },\n  {\n    \"id\": \"2\",\n    \"name\": \"John Doe\",\n    \"email\": \"john@email.com\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "Users"
+  },
+  {
+    "type": "get",
+    "url": "/users",
+    "title": "Get info of a specific user",
+    "group": "Users",
+    "name": "CreateUserById",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"id\": \"1\",\n  \"name\": \"John Doe\",\n  \"email\": \"john@email.com\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "Users"
+  },
+  {
+    "type": "delete",
+    "url": "/users:id",
+    "title": "Remove a user",
+    "group": "Users",
+    "name": "DeleteUser",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 204 OK\n{ }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "Users"
+  },
+  {
+    "type": "post",
+    "url": "/users",
+    "title": "Create new user",
+    "group": "Users",
+    "name": "PostUser",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>user account name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>user account e-mail</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>user account password</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": \"1\",\n    \"name\": \"John Doe\",\n    \"email\": \"john@email.com\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "Users"
+  },
+  {
+    "type": "put",
+    "url": "/users",
+    "title": "Update a user",
+    "group": "Users",
+    "name": "UpdateUser",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer authorization token.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>user account name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>user account e-mail</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>user account password</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"id\": \"1\",\n    \"name\": \"John Doe\",\n    \"email\": \"john@email.com\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "Users"
+  }
+] });

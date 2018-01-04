@@ -27,23 +27,74 @@ const saleFormValidator = [
     
     check('date').custom((value, { req, }) => {
         const pattern = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/ // mm/dd/yyyy pattern
-        return pattern.test(req.body.purchase_date)
+        return pattern.test(req.body.date)
     }).withMessage('O campo data de deve apresentar uma data válida no formato DD/MM/YYYY'),
 
     check('date').custom((value, { req, }) => {
-        const date = moment(req.body.purchase_date, 'DD/MM/YYYY')
+        const date = moment(req.body.date, 'DD/MM/YYYY')
         return date.isValid()
     }).withMessage('O campo data de deve apresentar uma data válida')
 ]
 
 router.all('*', passport.authenticate())
 
+/**
+ * @api {get} /sales Get list of all sales
+ * @apiGroup Sales
+ * @apiName GetSales
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  [
+ *      {
+ *          "id": 1,
+ *          "date": "2018-01-03T03:00:00.000Z",
+ *          "paid": true,
+ *          "value": "39.90",
+ *          "user_id": 3,
+ *          "clothe_id": 1,
+ *          "customer_id": 1
+ *      },
+ *      {
+ *          "id": 1,
+ *          "date": "2018-01-03T03:00:00.000Z",
+ *          "paid": true,
+ *          "value": "39.90",
+ *          "user_id": 3,
+ *          "clothe_id": 1,
+ *          "customer_id": 1
+ *      }
+ *  ]
+ * 
+ */
 router.get('/', (req, res, next) => {
     Sales.findAll({ where: { user_id: req.user.id }})
     .then(sales => res.json({ sales }))
     .catch(error => next(error))
 })
 
+/**
+ * @api {get} /sales/:id Get list from a specific sale
+ * @apiGroup Sales
+ * @apiName GetSales
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiParam { Number } id Sale's id number
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *      "id": 1,
+ *      "date": "2018-01-03T03:00:00.000Z",
+ *      "paid": true,
+ *      "value": "39.90",
+ *      "user_id": 3,
+ *      "clothe_id": 1,
+ *      "customer_id": 1
+ *  }
+ * 
+ */
 router.get('/:id', (req, res, next) => {
     Sales.findById(req.params.id, { where: { user_id: req.user.id }})
     .then(sale => {
@@ -53,6 +104,31 @@ router.get('/:id', (req, res, next) => {
     .catch(error => next(error))
 })
 
+/**
+ * @api {post} /sales Create a new sale
+ * @apiGroup Sales
+ * @apiName PostSales
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiParam { Date } date Sale's date
+ * @apiParam { Boolean } paid Sale's has been paid
+ * @apiParam { Decimal } value Sale's value
+ * @apiParam { Number } clothe_id id from the clothe sold
+ * @apiParam { Number } customer_id id from the customer
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *      "id": 1,
+ *      "date": "2018-01-03T03:00:00.000Z",
+ *      "paid": true,
+ *      "value": "39.90",
+ *      "user_id": 3,
+ *      "clothe_id": 1,
+ *      "customer_id": 1
+ *  }
+ * 
+ */
 router.post('/', saleFormValidator,(req, res, next) => {
     const errors = validationResult(req)
         if(!errors.isEmpty()) return res.status(422).json(errors.array())
@@ -81,6 +157,31 @@ router.post('/', saleFormValidator,(req, res, next) => {
     .catch(error => res.json(error.message))
 })
 
+/**
+ * @api {put} /sales Update a sale
+ * @apiGroup Sales
+ * @apiName PutSales
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiParam { Date } date Sale's date
+ * @apiParam { Boolean } paid Sale's has been paid
+ * @apiParam { Decimal } value Sale's value
+ * @apiParam { Number } clothe_id id from the clothe sold
+ * @apiParam { Number } customer_id id from the customer
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *      "id": 1,
+ *      "date": "2018-01-03T03:00:00.000Z",
+ *      "paid": true,
+ *      "value": "39.90",
+ *      "user_id": 3,
+ *      "clothe_id": 1,
+ *      "customer_id": 1
+ *  }
+ * 
+ */
 router.put('/:id', saleFormValidator, (req, res, next) => {
     const errors = validationResult(req)
         if(!errors.isEmpty()) return res.status(422).json(errors.array())
@@ -106,6 +207,18 @@ router.put('/:id', saleFormValidator, (req, res, next) => {
     .catch(error => next(error))
 })
 
+/**
+ * @api {delete} /sales/:id Remove sale
+ * @apiGroup Sales
+ * @apiName DeleteSales
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiParam { Number } id Sale's id
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 204 OK
+ *  { }
+ */
 router.delete('/:id', (req, res, next) => {
     let sale = null
 

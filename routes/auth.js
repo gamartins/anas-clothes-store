@@ -23,6 +23,20 @@ const loginFormErrors = [
     check('password').not().isEmpty().withMessage('A senha não pode ser enviada branco'),
 ]
 
+/**
+ * @api { post } /auth Authenticate user
+ * @apiGroup Auth
+ * @apiName PostUser
+ * 
+ * @apiParam { String } email       user account e-mail
+ * @apiParam { String } password    user account password
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *      "token": "SomeToken"
+ *  }
+ */
 router.post('/', loginFormErrors, (req, res, next) => {
         
     const errors = validationResult(req)

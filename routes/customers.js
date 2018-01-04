@@ -19,12 +19,61 @@ const customerFormValidators = [
 
 router.all('*', passport.authenticate())
 
+/**
+ * @api {get} /customers Get list of all customers
+ * @apiGroup Customers
+ * @apiName GetCustomers
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  [
+ *      {
+ *          "id": 1,
+ *          "name": "Rafinha",
+ *          "phone": "8535551234",
+ *          "address": "Montese?",
+ *          "user_id": 3,
+ *          "updatedAt": "2018-01-03T23:41:00.786Z",
+ *          "createdAt": "2018-01-03T23:41:00.786Z"
+ *      },
+ *      {
+ *          "id": 1,
+ *          "name": "Rafinha",
+ *          "phone": "8535551234",
+ *          "address": "Montese?",
+ *          "user_id": 3,
+ *          "updatedAt": "2018-01-03T23:41:00.786Z",
+ *          "createdAt": "2018-01-03T23:41:00.786Z"
+ *      }
+ *  ]
+ * 
+ */
 router.get('/', (req, res, next) => {
     Customers.findAll({ where: { user_id: req.user.id }})
     .then(customers => res.json({ customers }))
     .catch(error => next(error))
 })
 
+/**
+ * @api {get} /customers/:id Get info from a specific customer
+ * @apiGroup Customers
+ * @apiName GetCustomersById
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiParam { Number } id Customer id number
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *      "id": 1,
+ *      "name": "Rafinha",
+ *      "phone": "8535551234",
+ *      "address": "Montese?",
+ *      "user_id": 3
+ *  }
+ * 
+ */
 router.get('/:id', (req, res, next) => {
     Customers.findById(req.params.id, { where: { user_id: req.user.id }})
     .then(customer => {
@@ -34,6 +83,27 @@ router.get('/:id', (req, res, next) => {
     .catch(error => next(error))
 })
 
+/**
+ * @api {post} /customers Create new customer
+ * @apiGroup Customers
+ * @apiName PostCustomer
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiParam { String } name Customer's name
+ * @apiParam { String } phone Phone number
+ * @apiParam { Decimal } address Customer's address
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *      "id": 1,
+ *      "name": "Rafinha",
+ *      "phone": "8535551234",
+ *      "address": "Montese?",
+ *      "user_id": 3
+ *  }
+ * 
+ */
 router.post('/', customerFormValidators, (req, res, next) => {
     const errors = validationResult(req)
         if(!errors.isEmpty()) return res.status(422).json(errors.array())
@@ -50,6 +120,28 @@ router.post('/', customerFormValidators, (req, res, next) => {
     .catch(error => next(error))
 })
 
+/**
+ * @api {put} /customers Update data from a customer
+ * @apiGroup Customers
+ * @apiName PutCustomer
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiParam { Number } id Customer's id
+ * @apiParam { String } name Customer's name
+ * @apiParam { String } phone Phone number
+ * @apiParam { Decimal } address Customer's address
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *      "id": 1,
+ *      "name": "Rafinha",
+ *      "phone": "8535551234",
+ *      "address": "Montese?",
+ *      "user_id": 3
+ *  }
+ * 
+ */
 router.put('/:id', customerFormValidators,(req, res, next) => {
     const errors = validationResult(req)
         if(!errors.isEmpty()) return res.status(422).json(errors.array())
@@ -67,6 +159,16 @@ router.put('/:id', customerFormValidators,(req, res, next) => {
     .catch(error => next(error))
 })
 
+/**
+ * @api {delete} /customers/:id Remove a customer
+ * @apiGroup Customers
+ * @apiName DeleteCustomer
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 204 OK
+ *  { }
+ */
 router.delete('/:id', (req, res, next) => {
     Customers.findById(req.params.id, { where: { user_id: req.user.id }})
     .then(customer => {

@@ -13,12 +13,48 @@ const userFormErrors = [
   check('password').isLength({ min: 6}).withMessage('A senha devo possuir no mínimo 6 digitos')
 ]
 
+/**
+ * @api {get} /users Get list of all users
+ * @apiGroup Users
+ * @apiName CreateUser
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  [
+ *    {
+ *      "id": "1",
+ *      "name": "John Doe",
+ *      "email": "john@email.com"
+ *    },
+ *    {
+ *      "id": "2",
+ *      "name": "John Doe",
+ *      "email": "john@email.com"
+ *    }
+ *  ]
+ * 
+ */
 router.get('/', passport.authenticate(), (req, res, next) => {
   Users.findAll()
   .then(users => res.json({ users }))
   .catch(error => next(error))
 })
 
+/**
+ * @api {get} /users Get info of a specific user
+ * @apiGroup Users
+ * @apiName CreateUserById
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *    "id": "1",
+ *    "name": "John Doe",
+ *    "email": "john@email.com"
+ *  }
+ */
 router.get('/:id', passport.authenticate(), (req, res, next) => {
   Users.findById(req.params.id)
   .then(user => {
@@ -28,6 +64,23 @@ router.get('/:id', passport.authenticate(), (req, res, next) => {
   .catch(error => next(error))
 })
 
+/**
+ * @api {post} /users Create new user
+ * @apiGroup Users
+ * @apiName PostUser
+ * 
+ * @apiParam { String } name        user account name
+ * @apiParam { String } email       user account e-mail
+ * @apiParam { String } password    user account password
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *      "id": "1",
+ *      "name": "John Doe",
+ *      "email": "john@email.com"
+ *  }
+ */
 router.post('/', userFormErrors , (req, res, next) => {
   const errors = validationResult(req)
     if(!errors.isEmpty()) return res.status(422).json(errors.array())
@@ -43,6 +96,24 @@ router.post('/', userFormErrors , (req, res, next) => {
   .catch(error => next(error))
 })
 
+/**
+ * @api {put} /users Update a user
+ * @apiGroup Users
+ * @apiName UpdateUser
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiParam { String } name        user account name
+ * @apiParam { String } email       user account e-mail
+ * @apiParam { String } password    user account password
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  {
+ *      "id": "1",
+ *      "name": "John Doe",
+ *      "email": "john@email.com"
+ *  }
+ */
 router.put('/:id', userFormErrors, passport.authenticate(), (req, res, next) => {
   const errors = validationResult(req)
     if(!errors.isEmpty()) return res.status(422).json(errors.array())
@@ -59,6 +130,16 @@ router.put('/:id', userFormErrors, passport.authenticate(), (req, res, next) => 
   .catch(error => next(error))
 })
 
+/**
+ * @api {delete} /users:id Remove a user
+ * @apiGroup Users
+ * @apiName DeleteUser 
+ * @apiHeader {String} Authorization Bearer authorization token.
+ * 
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 204 OK
+ *  { }
+ */
 router.delete('/:id', passport.authenticate(), (req, res, next) => {
   Users.findById(req.params.id)
   .then(user => {
