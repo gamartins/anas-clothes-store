@@ -14,53 +14,23 @@ const userFormErrors = [
 ]
 
 /**
- * @api {get} /users Get list of all users
+ * @api {get} /users Get user info
  * @apiGroup Users
- * @apiName CreateUser
- * @apiHeader {String} Authorization Bearer authorization token.
- * 
- * @apiSuccessExample Success-Response:
- *  HTTP/1.1 200 OK
- *  [
- *    {
- *      "id": "1",
- *      "name": "John Doe",
- *      "email": "john@email.com"
- *    },
- *    {
- *      "id": "2",
- *      "name": "John Doe",
- *      "email": "john@email.com"
- *    }
- *  ]
- * 
- */
-router.get('/', passport.authenticate(), (req, res, next) => {
-  Users.findAll()
-  .then(users => res.json({ users }))
-  .catch(error => next(error))
-})
-
-/**
- * @api {get} /users Get info of a specific user
- * @apiGroup Users
- * @apiName CreateUserById
+ * @apiName GetUser
  * @apiHeader {String} Authorization Bearer authorization token.
  * 
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 200 OK
  *  {
- *    "id": "1",
- *    "name": "John Doe",
- *    "email": "john@email.com"
+ *      "id": "1",
+ *      "name": "John Doe",
+ *      "email": "john@email.com"
  *  }
+ * 
  */
-router.get('/:id', passport.authenticate(), (req, res, next) => {
-  Users.findById(req.params.id)
-  .then(user => {
-    if(user) res.status(200).json({ user })
-    else res.status(404).json({ error: 'Usuário não encontrado' })
-  })
+router.get('/', passport.authenticate(), (req, res, next) => {
+  Users.findOne({ where: { id: req.user.id }})
+  .then(users => res.json({ users }))
   .catch(error => next(error))
 })
 
@@ -114,7 +84,7 @@ router.post('/', userFormErrors , (req, res, next) => {
  *      "email": "john@email.com"
  *  }
  */
-router.put('/:id', userFormErrors, passport.authenticate(), (req, res, next) => {
+router.put('/', userFormErrors, passport.authenticate(), (req, res, next) => {
   const errors = validationResult(req)
     if(!errors.isEmpty()) return res.status(422).json(errors.array())
 
@@ -124,14 +94,14 @@ router.put('/:id', userFormErrors, passport.authenticate(), (req, res, next) => 
     password: req.body.password,
   }
 
-  Users.findById(req.params.id)
+  Users.findById(req.user.id)
   .then(user => user.update(userUpdated))
   .then(user => res.json(user))
   .catch(error => next(error))
 })
 
 /**
- * @api {delete} /users:id Remove a user
+ * @api {delete} /users Remove a user
  * @apiGroup Users
  * @apiName DeleteUser 
  * @apiHeader {String} Authorization Bearer authorization token.
@@ -140,8 +110,8 @@ router.put('/:id', userFormErrors, passport.authenticate(), (req, res, next) => 
  *  HTTP/1.1 204 OK
  *  { }
  */
-router.delete('/:id', passport.authenticate(), (req, res, next) => {
-  Users.findById(req.params.id)
+router.delete('/', passport.authenticate(), (req, res, next) => {
+  Users.findById(req.user.id)
   .then(user => {
     if(user) user.destroy().then(() => res.status(204).json())
     else res.status(404).json({ error: 'Usuário não encontrado' })
