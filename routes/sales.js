@@ -6,6 +6,7 @@ const router = express.Router()
 
 const Sales = require('../models/index').Sales
 const Clothes = require('../models/index').Clothes
+const Customers = require('../models/index').Customers
 
 const saleFormValidator = [
     check('paid').exists().withMessage('O campo pago é obrigatório'),
@@ -69,7 +70,11 @@ router.all('*', passport.authenticate())
  * 
  */
 router.get('/', (req, res, next) => {
-    Sales.findAll({ where: { user_id: req.user.id }})
+    Sales
+    .findAll({
+        where: { user_id: req.user.id },
+        include: [ Clothes, Customers ]
+    })
     .then(sales => res.json({ sales }))
     .catch(error => next(error))
 })
@@ -96,7 +101,10 @@ router.get('/', (req, res, next) => {
  * 
  */
 router.get('/:id', (req, res, next) => {
-    Sales.findById(req.params.id, { where: { user_id: req.user.id }})
+    Sales.findById(req.params.id, {
+        where: { user_id: req.user.id },
+        include: [ Clothes, Customers ]
+    })
     .then(sale => {
         if(sale) res.status(200).json({ sale })
         else res.status(404).json({ error: 'Venda não encontrada' })
