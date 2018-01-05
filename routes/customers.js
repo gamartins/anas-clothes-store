@@ -172,7 +172,7 @@ router.put('/:id', customerFormValidators,(req, res, next) => {
 router.delete('/:id', (req, res, next) => {
     Customers.findById(req.params.id, { where: { user_id: req.user.id }})
     .then(customer => {
-        if(customer) customer.destroy().then(() => res.json())
+        if(customer) customer.destroy().then(() => res.status(204).json())
         else res.status(404).json({ error: 'Cliente não encontrado' })
     })
     .catch(error => next(error))
